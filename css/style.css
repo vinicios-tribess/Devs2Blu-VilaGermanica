@@ -1,0 +1,39 @@
+.botao-alternativa{
+    background: #3cacec;
+    border-style: solid;
+    border-color: coral;
+    margin: 10px 10px;
+    padding: 3px;
+    width: 250px;
+    text-align: center;
+    border-radius: 15%;    
+}
+
+.titulo{
+    font-weight: strong;
+    font-style: bold;
+    font-size: 20px;
+}
+
+
+
+
+
+
+.correta {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .errada {
+    color: red;
+    text-decoration: line-through;
+  }
+  
+  #mensagem {
+    font-weight: bold;
+  }
+  
+  .escondido {
+    display: none;
+  }

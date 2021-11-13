@@ -1,12 +1,25 @@
-.botao-alternativa{
-    background: #3cacec;
-    border-style: solid;
-    border-color: coral;
+body{
+	font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
+p{
+    display: inline-block;
+    text-align: center;        
+    background: #1677af;  
+    color: white;      
     margin: 10px 10px;
-    padding: 3px;
-    width: 250px;
-    text-align: center;
-    border-radius: 15%;    
+    padding: 10px;
+    width: 300px;
+    vertical-align: middle;
+    height: 35px;
+    
+    border-radius: 4%;    
+}
+
+p:hover{
+  background: #1c0264;     
+  
 }
 
 .titulo{
@@ -16,24 +29,18 @@
 }
 
 
-
-
-
-
 .correta {
-    color: green;
+    background: green;    
+  }
+  
+.errada {
+    background: red;    
+  }
+  
+ #mensagem {
     font-weight: bold;
   }
   
-  .errada {
-    color: red;
-    text-decoration: line-through;
-  }
-  
-  #mensagem {
-    font-weight: bold;
-  }
-  
-  .escondido {
+.escondido {
     display: none;
   }

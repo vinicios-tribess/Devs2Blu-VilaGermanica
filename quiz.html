@@ -6,7 +6,7 @@
 		<!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
         <link rel="shortcut icon" href="vacina.svg">
 		<link rel="stylesheet" type="text/css" href="css/reset.css">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/quiz-style.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 	</head>
 	<body>
@@ -22,8 +22,10 @@
 
                 <section class="jogo">
 
-                Acertou: <span id="acertos">0</span>
-                Errou: <span id="erros">0</span><br>
+                    <div class="pontuacao">
+                        Acertou: <span id="acertos">0</span>
+                        Errou: <span id="erros">0</span><br>
+                    </div>
 
                 <br>
 
@@ -41,18 +43,19 @@
 
                 <p id="resultado">Aqui vai o feedback se acertou ou errou</p>
 
+                <br>
+                <button id="proxima" class="botao bto-principal">Proxima</button>
 
                 </section>
 
-                <br>
-                <button id="proxima" class="botao bto-principal">Proxima</button>
+                
 
             </section>
 		</main>
 
         <footer>Equipe Vila Germânica +Devs2Blu</footer>
         
-		<script src="js/jogo.js"></script>
+		<script src="js/quiz.js"></script>
 
 	</body>
 </html>

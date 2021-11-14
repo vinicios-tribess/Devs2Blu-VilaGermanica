@@ -1,4 +1,4 @@
-// Código de execução do quiz
+// Código de execução do QUIZ
 
 // Montagem das questões
 
@@ -7,23 +7,23 @@ var q1 = {pergunta : "Qual dessas medidas NÃO é cientificamente comprovada par
             alternativa2 : "Manter distânciamento social", 
             alternativa3 : "Tratamento com cloroquina", 
             alternativa4 : "Uso de máscara", 
-            correta : "alternativa-3", 
+            correta : "Tratamento com cloroquina", 
             explicacao : "O tratamento com cloroquina não é uma medida cientificamente comprovada para o combate e prevenção da Covid-19, todas as demais estão corretas."};
 
 var q2 = {pergunta : "Os sintomas mais comuns da COVID-19 são:", 
-            alternativa1 : "perda de visão, tontura e pele amarelada", 
-            alternativa2 : "febre, tosse, cansaço, dor de cabeça e alteração do olfato", 
-            alternativa3 : "queda de cabelo, coceira na pele e falta de apetite", 
-            alternativa4 : "pele avermelhada, catarro e vista embaçada", 
-            correta : "alternativa-2", 
+            alternativa1 : "Perda de visão, tontura e pele amarelada", 
+            alternativa2 : "Febre, tosse, cansaço, dor de cabeça e alteração do olfato", 
+            alternativa3 : "Queda de cabelo, coceira na pele e falta de apetite", 
+            alternativa4 : "Pele avermelhada, catarro e vista embaçada", 
+            correta : "Febre, tosse, cansaço, dor de cabeça e alteração do olfato", 
             explicacao : "Os principais sintômas da Covid-19 são febre, tosse, cansaço, dor de cabeça e alteração do olfato."};
 
 var q3 = {pergunta : "Estando em locais públicos, o mais indicado a se fazer ao espirrar ou tossir é?", 
             alternativa1 : "Cobrir com o cotovelo", 
-            alternativa2 : "Combir com a mão", 
+            alternativa2 : "Cobrir com a mão", 
             alternativa3 : "Falar 'saúde'", 
             alternativa4 : "Utilizar máscara", 
-            correta : "alternativa-4", 
+            correta : "Utilizar máscara", 
             explicacao : "Fora de casa devemos utilizar máscara"};
 
 let perguntas = [q1, q2, q3]; 
@@ -59,28 +59,14 @@ function montaQuestao(){
     campoAcertos = jogo.querySelector("#acertos");
     campoErros = jogo.querySelector("#erros");
 
-    p.textContent = perguntas[questao].pergunta;
-
-    // Embaralhar as alternativas para não ficar sempre nos mesmos botões
-
-    var botoesDisponiveis = [a1, a2, a3, a4];
-
-    // for percorrendo cada botão e colocando cada alternativa usando
-    // console.log((Math.round(Math.random()*4)))
-
-    // para isso, precisamos ter uma dimensao a mais no objeto, para inidicar a alternativa correta
-    // ou fazer algum outro tipo de tratativa    
-    
-    // coloca cada alternativa em um botão de alternativa
+    p.textContent = perguntas[questao].pergunta; 
     a1.textContent = perguntas[questao].alternativa1;
     a2.textContent = perguntas[questao].alternativa2;
     a3.textContent = perguntas[questao].alternativa3;
-    a4.textContent = perguntas[questao].alternativa4;
-    
-    resultado.textContent = "Escolha uma das alternativas";
+    a4.textContent = perguntas[questao].alternativa4;    
+    resultado.textContent = "Por favor, escolha uma das alternativas";
 
     lista = document.getElementById("lista-alternativas");
-
 }
 
 // Chamada da função para montar a primeira questão na tela
@@ -91,32 +77,47 @@ montaQuestao();
 
 lista.addEventListener("click", function(event){
 
-    var escolha = event.target.id;
-    var botaoEscolhido = document.getElementById(escolha);
-   
-    //var escolha = event.target.parentNode.textContent;    
-    var escolha = event.target.id;
-    var correta = perguntas[questao].correta;
-    var mensagem = "";
-    
-    if(escolha == correta){        
-        botaoEscolhido.classList.replace("botao-alternativa", "resposta-correta");        
-        console.log("acertou!");
-        acertos = acertos + 1;        
-        mensagem = "Parabéns, você acertou: ";
-        
-    }else{        
-        console.log("Errou.")
-        erros = erros + 1;        
-        mensagem = "Infelizmente você errou: ";
-        botaoEscolhido.classList.replace("botao-alternativa", "resposta-errada");
-    }
+    // não deixar clicar em outra alternativa até clicar em próxima
+    if(!algumaAlternativaEscolhida()){
 
-    campoAcertos.textContent = acertos;
-    campoErros.textContent = erros;
-    resultado.textContent = mensagem + perguntas[questao].explicacao;
-    
-    questao = questao + 1;        
+        var escolha = event.target.id;
+        var botaoEscolhido = document.getElementById(escolha);
+        var textoEscolha = botaoEscolhido.textContent;        
+        var correta = perguntas[questao].correta;
+        var mensagem = "";
+            
+        if(textoEscolha == correta){        
+            botaoEscolhido.classList.replace("botao-alternativa", "resposta-correta");
+            console.log("acertou!");
+            acertos = acertos + 1;        
+            mensagem = "Parabéns, você acertou: ";
+            
+        }else{        
+            console.log("Errou.")
+            erros = erros + 1;        
+            mensagem = "Infelizmente você errou: ";
+            botaoEscolhido.classList.replace("botao-alternativa", "resposta-errada");
+
+            // selecionar o botão com a alternativa correta para colorir de verde            
+            var todos = lista.querySelectorAll("p");
+            todos.forEach(function(b){            
+                if(b.textContent == correta){
+                    b.classList.replace("botao-alternativa","resposta-correta");
+                }
+            });
+
+        }
+
+        // contabiliza acertos e erros
+        campoAcertos.textContent = acertos;
+        campoErros.textContent = erros;
+
+        // mostra a mensagem de explicação associada à pergunta
+        resultado.textContent = mensagem + perguntas[questao].explicacao;        
+        
+        // vai para a próxima questão
+        questao = questao + 1;      
+}  
 
 })
 
@@ -137,9 +138,7 @@ botao.addEventListener("click",function(){
         }
     }else{
         alert("Por favor, escolha uma alternativa.");
-    }
-
-    
+    }  
 
 })
 
@@ -170,18 +169,26 @@ function limpaClasses(){
 
 function fimDeJogo(){
 
-    let mensagemFim = "Você acertou " + acertos + " perguntas, ";
+    let mensagemFim = "Você acertou " + acertos + " pergunta(s): ";
+
+    var mensagensFim = ["Você sabe pouco sobre a prevenção. Que tal dar uma olha neste site 'https://portal.fiocruz.br/coronavirus/perguntas-e-respostas' ?",
+    "Você está ficando bom, que tal ler esse artigo (https://portal.fiocruz.br/coronavirus/perguntas-e-respostas) para melhorar seu conhecimento sobre Covid-19?",
+    "Você sabe bastante sobre prevenção, esperamos que as dicas durante o jogo, tenham melhorado ainda mais seu conhecimento sobre prevenção da Covid-19",
+    "Parabéns, você está sabe como se prevenir, ajude a conscientizar outras pessoas."]
+
+    mensagemFim = mensagemFim + mensagensFim[acertos];
     
+    /*
     switch(acertos){
-        case 0 : mensagemFim = mensagemFim + "então sabe pouco sobre a prevenção. Que tal dar uma olha neste site https://portal.fiocruz.br/coronavirus/perguntas-e-respostas ?";
+        case 0 : mensagemFim = mensagemFim + "Você sabe pouco sobre a prevenção. Que tal dar uma olha neste site https://portal.fiocruz.br/coronavirus/perguntas-e-respostas ?";
         break;
-        case 1 : mensagemFim = mensagemFim + "então está ficando bom, que tal ler esse artigo (link) para melhorar seu conhecimento sobre Covid-19?";
+        case 1 : mensagemFim = mensagemFim + "Você está ficando bom, que tal ler esse artigo (link) para melhorar seu conhecimento sobre Covid-19?";
         break;
-        case 2 : mensagemFim = mensagemFim + "então sabe bastante sobre prevenção, esperamos que as dicas durante o jogo, tenham melhorado ainda mais seu conhecimento sobre prevenção da Covid-19";
+        case 2 : mensagemFim = mensagemFim + "Você sabe bastante sobre prevenção, esperamos que as dicas durante o jogo, tenham melhorado ainda mais seu conhecimento sobre prevenção da Covid-19";
         break;
-        case 3 : mensagemFim = mensagemFim + "parabéns, você está sabe como se prevenir, ajude a conscientizar outras pessoas.";
+        case 3 : mensagemFim = mensagemFim + "Parabéns, você está sabe como se prevenir, ajude a conscientizar outras pessoas.";
         break;
-    }
+    }*/
 
         resultado.textContent = mensagemFim;
 }

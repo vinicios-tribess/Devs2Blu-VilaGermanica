@@ -1,12 +1,13 @@
+// Código de execução do quiz
 
-// montagem das questões
+// Montagem das questões
 
 var q1 = {pergunta : "Qual dessas medidas NÃO é cientificamente comprovada para o combate e prevenção da Covid-19?", 
             alternativa1 : "Usar álcool em gel", 
             alternativa2 : "Manter distânciamento social", 
             alternativa3 : "Tratamento com cloroquina", 
-            alternativa4 : "Uso de másca", 
-            correta : "Tratamento com cloroquina", 
+            alternativa4 : "Uso de máscara", 
+            correta : "alternativa-3", 
             explicacao : "O tratamento com cloroquina não é uma medida cientificamente comprovada para o combate e prevenção da Covid-19, todas as demais estão corretas."};
 
 var q2 = {pergunta : "Os sintomas mais comuns da COVID-19 são:", 
@@ -14,24 +15,26 @@ var q2 = {pergunta : "Os sintomas mais comuns da COVID-19 são:",
             alternativa2 : "febre, tosse, cansaço, dor de cabeça e alteração do olfato", 
             alternativa3 : "queda de cabelo, coceira na pele e falta de apetite", 
             alternativa4 : "pele avermelhada, catarro e vista embaçada", 
-            correta : "febre, tosse, cansaço, dor de cabeça e alteração do olfato", 
-            explicacao : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ullamcorper dictum sem, ac volutpat ipsum. Donec rutrum nibh interdum justo lacinia, vitae rutrum elit tempor."};
+            correta : "alternativa-2", 
+            explicacao : "Os principais sintômas da Covid-19 são febre, tosse, cansaço, dor de cabeça e alteração do olfato."};
 
-var q3 = {pergunta : "Terceira pergunta?", 
-            alternativa1 : "alternativa1", 
-            alternativa2 : "Correta", 
-            alternativa3 : "alternativa3", 
-            alternativa4 : "alternativa4", 
-            correta : "Correta", 
-            explicacao : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nunc erat, ultricies nec semper ac, euismod sed enim. Etiam vitae ultrices magna. Ut et faucibus neque."};            
+var q3 = {pergunta : "Estando em locais públicos, o mais indicado a se fazer ao espirrar ou tossir é?", 
+            alternativa1 : "Cobrir com o cotovelo", 
+            alternativa2 : "Combir com a mão", 
+            alternativa3 : "Falar 'saúde'", 
+            alternativa4 : "Utilizar máscara", 
+            correta : "alternativa-4", 
+            explicacao : "Fora de casa devemos utilizar máscara"};
 
-let perguntas = [q1, q2, q3]; // array com 6 objetos contendo as que
+let perguntas = [q1, q2, q3]; 
+
+// Declaração das variáveis globais
+
 let acertos = 0;
 let erros = 0;
 let questao = 0;
 let campoAcertos = 0;
 let campoErros = 0;
-
 let p = "";
 let a1 = "";
 let a2 = "";
@@ -41,7 +44,7 @@ let resultado = "";
 let jogo = "";
 let lista = "";
 
-// coloca a questão na tela
+// Função para a montagem da questão na tela
 
 function montaQuestao(){
 
@@ -57,70 +60,120 @@ function montaQuestao(){
     campoErros = jogo.querySelector("#erros");
 
     p.textContent = perguntas[questao].pergunta;
+
+    // Embaralhar as alternativas para não ficar sempre nos mesmos botões
+
+    var botoesDisponiveis = [a1, a2, a3, a4];
+
+    // for percorrendo cada botão e colocando cada alternativa usando
+    // console.log((Math.round(Math.random()*4)))
+
+    // para isso, precisamos ter uma dimensao a mais no objeto, para inidicar a alternativa correta
+    // ou fazer algum outro tipo de tratativa    
+    
+    // coloca cada alternativa em um botão de alternativa
     a1.textContent = perguntas[questao].alternativa1;
     a2.textContent = perguntas[questao].alternativa2;
     a3.textContent = perguntas[questao].alternativa3;
     a4.textContent = perguntas[questao].alternativa4;
-    resultado.textContent = "Escolha uma das alternativas";
     
-    lista = document.querySelector("#lista-alternativas");
+    resultado.textContent = "Escolha uma das alternativas";
+
+    lista = document.getElementById("lista-alternativas");
 
 }
 
+// Chamada da função para montar a primeira questão na tela
+
 montaQuestao();
 
-
+// Função de EVENTO para os botões de ALTERNATIVA
 
 lista.addEventListener("click", function(event){
 
-    var escolha = event.target.parentNode.textContent;
+    var escolha = event.target.id;
+    var botaoEscolhido = document.getElementById(escolha);
+   
+    //var escolha = event.target.parentNode.textContent;    
+    var escolha = event.target.id;
     var correta = perguntas[questao].correta;
     var mensagem = "";
-
-    if(escolha == correta){
-        //event.target.parentNode.classList.add("correta");        
+    
+    if(escolha == correta){        
+        botaoEscolhido.classList.replace("botao-alternativa", "resposta-correta");        
         console.log("acertou!");
         acertos = acertos + 1;        
         mensagem = "Parabéns, você acertou: ";
         
-    }else{
-        //event.target.parentNode.classList.add("errada");
+    }else{        
         console.log("Errou.")
         erros = erros + 1;        
         mensagem = "Infelizmente você errou: ";
+        botaoEscolhido.classList.replace("botao-alternativa", "resposta-errada");
     }
-    
-    setTimeout(function(){},500);
 
     campoAcertos.textContent = acertos;
     campoErros.textContent = erros;
-    resultado.textContent = perguntas[questao].explicacao;
-
-    console.log(escolha);    
-    questao = questao + 1;    
+    resultado.textContent = mensagem + perguntas[questao].explicacao;
+    
+    questao = questao + 1;        
 
 })
+
+// Função de EVENTO para o botão de PRÓXIMA
 
 let botao = document.querySelector("#proxima");
 
 botao.addEventListener("click",function(){
 
-    if(questao < perguntas.length){
-        montaQuestao();
+    if(algumaAlternativaEscolhida()){
+
+        limpaClasses();
+
+        if(questao < perguntas.length){
+            montaQuestao();
+        }else{
+            fimDeJogo();
+        }
     }else{
-        fimDeJogo();
+        alert("Por favor, escolha uma alternativa.");
     }
 
+    
+
 })
+
+// Verificar se alguma alternativa foi escolhida
+
+function algumaAlternativaEscolhida(){
+    
+    var escolhido = false;
+    var botoes = lista.querySelectorAll("p");    
+    botoes.forEach(function(b){        
+        if(b.classList.toString() != "botao-alternativa"){
+            escolhido = true;
+        }        
+    })
+    return escolhido;
+}
+
+// Limpar as classes dos botões de alternativas
+
+function limpaClasses(){
+    var botoes = lista.querySelectorAll("p");    
+    botoes.forEach(function(b){        
+        b.classList.replace(b.classList.toString(), "botao-alternativa");
+    })
+}
+
+// Função que finaliza o jogo mostrando os resultados
 
 function fimDeJogo(){
 
     let mensagemFim = "Você acertou " + acertos + " perguntas, ";
-
-    console.log(acertos);
-
+    
     switch(acertos){
-        case 0 : mensagemFim = mensagemFim + "então sabe pouco sobre a prevenção, Que tal dar uma olha neste site https://portal.fiocruz.br/coronavirus/perguntas-e-respostas ?";
+        case 0 : mensagemFim = mensagemFim + "então sabe pouco sobre a prevenção. Que tal dar uma olha neste site https://portal.fiocruz.br/coronavirus/perguntas-e-respostas ?";
         break;
         case 1 : mensagemFim = mensagemFim + "então está ficando bom, que tal ler esse artigo (link) para melhorar seu conhecimento sobre Covid-19?";
         break;
@@ -133,9 +186,4 @@ function fimDeJogo(){
         resultado.textContent = mensagemFim;
 }
 
-
-
-
-// console.log((Math.round(Math.random()*4)))
-
-
+// FIM DO CÓDIGO

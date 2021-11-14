@@ -1,24 +1,114 @@
 body{
 	font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	font-size: 14px;
+  width: 100%;
+
 }
 
-p{
+header{
+  background: #439bd6;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.jogo{
+  margin: 5px 5px;
+  padding: 20px;
+  width: 600px;  
+  
+}
+
+#acertos{
     display: inline-block;
     text-align: center;        
-    background: #1677af;  
+    background: #16af16;  
     color: white;      
-    margin: 10px 10px;
-    padding: 10px;
-    width: 300px;
+    margin: 5px 5px;
+    padding: 5px;
+    width: 40px;
     vertical-align: middle;
-    height: 35px;
-    
+    height: 20px;    
     border-radius: 4%;    
 }
 
-p:hover{
+#erros{
+  display: inline-block;
+  text-align: center;        
+  background: #c93d3d;  
+  color: white;      
+  margin: 5px 5px;
+  padding: 5px;
+  width: 40px;
+  vertical-align: middle;
+  height: 20px;    
+  border-radius: 4%;    
+}
+
+#pergunta, #resultado{
+  width: 100%;
+  height: 40px;
+  margin: 10px 0px 15px 30px;
+  padding: 10px 10px 10px 10px;  
+  font-weight: bold;
+  background-color: #e9dfc8;
+  
+}
+
+
+#lista-alternativas{
+  
+  width: 100%;
+  margin: 0px 0px 0px 30px;
+  
+}
+
+/*lista-alternativas p{*/
+  .botao-alternativa{
+   /*display: inline-block;*/
+    text-align: left;            
+    background: #1677af;  
+    color: white;      
+    margin: 0px 0px 2px 0px;
+    padding: 10px 5px 0px 15px;
+    width: 100%;
+    height: 35px;    
+    border-radius: 10%;  
+    line-height: 1.7;
+    cursor: pointer;
+    
+}
+
+.resposta-correta{
+    background: #029b42;  
+    color: white;      
+    margin: 0px 0px 2px 0px;
+    padding: 10px 5px 0px 15px;
+    width: 100%;
+    height: 35px;    
+    border-radius: 10%;  
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+.resposta-errada{
+  text-align: left;            
+    background: #a50a0a;  
+    color: white;      
+    margin: 0px 0px 2px 0px;
+    padding: 10px 5px 0px 15px;
+    width: 100%;
+    height: 35px;    
+    border-radius: 10%;  
+    line-height: 1.7;
+    cursor: pointer;
+}
+
+#lista-alternativas p:hover{
   background: #1c0264;     
+  transition: 0.5s;
   
 }
 
@@ -28,19 +118,40 @@ p:hover{
     font-size: 20px;
 }
 
+#proxima{
+  display: inline-block;  
+    text-align: center;        
+    background: #e2af40;  
+    color: white;      
+    margin: 10px 10px;
+    padding: 10px;
+    width: 150px;
+    vertical-align: middle;
+    height: 35px;    
+    border-radius: 4%;    
 
-.correta {
-    background: green;    
+}
+
+footer{
+  margin-top: 50px;
+  text-align: center;
+  background: #439bd6;
+  padding: 10px 0;
+  margin-bottom: 10px;  
+  color: white;
+  font-weight: lighter;
+}
+
+
+
+
+
+@media screen and (max-width: 480px){
+
+  p{
+    display: inline;
+    width: 100%;
   }
-  
-.errada {
-    background: red;    
-  }
-  
- #mensagem {
-    font-weight: bold;
-  }
-  
-.escondido {
-    display: none;
-  }
+    
+}
+
